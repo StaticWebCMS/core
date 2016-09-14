@@ -1,4 +1,3 @@
-/* global tinymce */
 (function (staticWeb) {
     "use strict";
     var Login = function () {
