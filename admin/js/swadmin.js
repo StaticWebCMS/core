@@ -159,8 +159,6 @@
         var adminPath = this.getAdminPath();
 
         if (loggedIn) {
-            this.includeStyle(adminPath + 'css/swadmin.css');
-            self.loadOnPage();
             self.config.storage.isReady = true;
         } else {
             alert('Ogiltigt personligt åtkomsttoken.');
@@ -292,14 +290,6 @@
                 }
             }
         })
-    }
-    StaticWebDefinition.prototype.loadOnPage = function () {
-        var self = this;
-        var adminPath = self.getAdminPath();
-
-        if (this.config.onPage && this.config.onPage.display !== 'no') {
-            this.includeScript(adminPath + 'js/swonpage.js');
-        }
     }
     StaticWebDefinition.prototype.componentPermitted = function (element) {
       var self = this;
