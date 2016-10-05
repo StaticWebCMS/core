@@ -37,11 +37,11 @@
             .sw-panel-left {
                 position: fixed;
                 top: 0px;
-                left: 0;
+                left: -300px;
                 margin: 0 auto;
                 z-index: 100000;
                 height: 100%;
-                width: 0;
+                width: 300px;
                 font-family: sans-serif;
             }
             
@@ -58,7 +58,7 @@
             }
             
             #sw-panel-left-checkbox:checked ~ .sw-panel-left {
-                width: 300px;
+                left:0;
                 border-right: solid 3px rgb(47, 85, 117);
                 background-color: #fff;
             }
@@ -124,26 +124,15 @@
             <div class="sw-panel-dragdown"><label for="sw-panel-left-checkbox"></label></div>
             <ul class="sw-panel-content-list">
                 <li class="sw-panel-list-item">
-                    <input type="checkbox" id="sw-panel-list-item-01-checkbox" class="sw-expandable-checkbox sw-panel-list-item-checkbox">
+                    <input type="checkbox" id="sw-panel-list-item-pages-checkbox" class="sw-expandable-checkbox sw-panel-list-item-checkbox">
                     <div class="sw-panel-list-item-header">
-                        <label for="sw-panel-list-item-01-checkbox">
+                        <label for="sw-panel-list-item-pages-checkbox">
                             <span class="sw-panel-list-item-icon"></span>
-                            <div class="sw-panel-list-item-title">Item Header Text</div>
+                            <div class="sw-panel-list-item-title">Pages</div>
                         </label>
                     </div>
                     <div class="sw-panel-list-item-content">
-                        content
-                        <!--
-<ul class="sw-onpage-navigation-items">
-    <li class="sw-onpage-navigation-item-selected" title="/" data-sw-nav-item-path="/" data-sw-nav-item-folder="/" data-sw-nav-item-type="file">
-        <span>
-                            <a href="/index.html" class="sw-onpage-navigation-item-link">&nbsp;/</a>
-                            <a href="#" title="Delete &nbsp;/" class="sw-onpage-navigation-item-delete">x</a>
-                            <a href="#" title="Add a sub-page for &nbsp;/" class="sw-onpage-navigation-item-add">+</a>
-                        </span>
-    </li>
-</ul>
--->
+                        <div data-staticweb-component="sw-onpage-options-pages"></div>
                     </div>
                 </li>
             </ul>

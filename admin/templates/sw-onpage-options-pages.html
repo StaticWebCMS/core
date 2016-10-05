@@ -1,0 +1,25 @@
+<sw-template>
+    <div>
+        <sw-page-head>
+            <style>
+                .sw-onpage-navigation-items {
+                    list-style: none;
+                    padding-left: 1em;
+                }
+            </style>
+        </sw-page-head>
+        <sw-root>
+            <ul class="sw-onpage-navigation-items"></ul>
+        </sw-root>
+        <sw-item>
+            <li title="/" data-sw-nav-item-path="/">
+                <span>
+                    <a href="/index.html" class="sw-onpage-navigation-item-link">/</a>
+                    <a href="#" title="Delete &nbsp;/" class="sw-onpage-navigation-item-delete">x</a>
+                    <a href="#" title="Add a sub-page for &nbsp;/" class="sw-onpage-navigation-item-add">+</a>
+                </span>
+                <sw-item-children-placeholder></sw-item-children-placeholder>
+            </li>
+        </sw-item>
+    </div>
+</sw-template>
