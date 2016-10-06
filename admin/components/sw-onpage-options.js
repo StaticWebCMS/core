@@ -18,25 +18,45 @@
           var element = elements[i];
           var tmp = template.cloneNode(true);
 
-          var appDisplay = staticWeb.config.onPage.display;
-          var userDisplay = staticWeb.getUserSetting('sw.config.onPage.display');
-
           staticWeb.insertTemplate(tmp, element);
 
-          var optionsCheckbox = element.querySelector('#sw-panel-left-checkbox');
-          var optionsLabel = element.querySelector('.sw-panel-dragdown label');
-          if (appDisplay == 'always' || userDisplay == 'always') {
-            optionsCheckbox.checked = true;
-          }
+          // Show/hide options menu and track when it changes
+          self.trackOptionsOpenState(element);
+          // Show/hide pages panel and track when it changes
+          self.trackPanelPageOpenState(element);
 
-          optionsCheckbox.addEventListener('change', function (e) {
-            var value = optionsCheckbox.checked ? 'always' : 'onDemand';
-            staticWeb.setSetting('sw.config.onPage.display', value);
-            return;
-          });
-          
           staticWeb.loadComponents();
         }
+      });
+    },
+    trackPanelPageOpenState: function(element) {
+      var appDisplay = staticWeb.config.onPage.navigation.display;
+      var userDisplay = staticWeb.getUserSetting('sw.config.onPage.navigation.display');
+
+      var checkbox = element.querySelector('#sw-panel-list-item-pages-checkbox');
+      if (appDisplay == 'always' || userDisplay == 'always') {
+        checkbox.checked = true;
+      }
+
+      checkbox.addEventListener('change', function (e) {
+        var value = checkbox.checked ? 'always' : 'onDemand';
+        staticWeb.setSetting('sw.config.onPage.navigation.display', value);
+        return;
+      });
+    },
+    trackOptionsOpenState: function (element) {
+      var appDisplay = staticWeb.config.onPage.display;
+      var userDisplay = staticWeb.getUserSetting('sw.config.onPage.display');
+
+      var optionsCheckbox = element.querySelector('#sw-panel-left-checkbox');
+      if (appDisplay == 'always' || userDisplay == 'always') {
+        optionsCheckbox.checked = true;
+      }
+
+      optionsCheckbox.addEventListener('change', function (e) {
+        var value = optionsCheckbox.checked ? 'always' : 'onDemand';
+        staticWeb.setSetting('sw.config.onPage.display', value);
+        return;
       });
     },
     onStorageReady: function (storage) {
