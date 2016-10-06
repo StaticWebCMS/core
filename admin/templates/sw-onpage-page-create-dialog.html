@@ -1,0 +1,40 @@
+<sw-template>
+    <div>
+        <style>
+            .sw-onpage-page-create-dialog {
+                position: absolute;
+                top:0;
+                bottom:0;
+                left:0;
+                right:0;
+                background-color:#fff;
+                z-index: 1000000;
+            }
+        </style>
+        <sw-dialog>
+            <div class="sw-onpage-page-create-dialog">
+                <div class="sw-onpage-page-create-dialog-header">
+                    StaticWeb - Create new page<a href="#" title="Close dialog" class="sw-onpage-dialog-close">x</a>
+                </div>
+                <div class="sw-onpage-page-create-dialog-content">
+                    <div>
+                        <b>Page name:</b>
+                        <input id="sw-onpage-page-create-dialog-parent" type="hidden" value="" />
+                        <input id="sw-onpage-page-create-dialog-name" type="text" value="" />
+                    </div>
+                    <div>
+                        <b>Page url:</b>
+                        <input id="sw-onpage-page-create-dialog-parent" type="hidden" value="" />
+                        <input id="sw-onpage-page-create-dialog-url" type="text" value="" />
+                    </div>
+                    <div>
+                        <b>Choose template to use:</b>
+                    </div>
+                    <div class="sw-onpage-page-create-dialog-content-templates">
+                        loading page layout...
+                    </div>
+                </div>
+            </div>
+        </sw-dialog>
+    </div>
+</sw-template>

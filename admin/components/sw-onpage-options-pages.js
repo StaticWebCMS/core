@@ -41,6 +41,27 @@
             var link = li.querySelector('.sw-onpage-navigation-item-link');
             link.href = self.getPath();
             link.innerText = self.getDisplayName();
+
+            var delLink = li.querySelector('.sw-onpage-navigation-item-delete');
+            var addLink = li.querySelector('.sw-onpage-navigation-item-add');
+
+            // We are not allowed to remove root page, so remove delete button
+            if (this.getPath() === "/") {
+                delLink.remove();
+            }
+
+            addLink.addEventListener('click', function (e) {
+                //alert('add page under: ' + self.getDisplayName());
+                staticWeb.retrieveTemplate("sw-onpage-page-create-dialog", function (dialogTemplate) {
+                    var body = document.querySelector('body');
+                    var dialog = dialogTemplate.cloneNode(true).querySelector('sw-dialog').children[0];
+                    body.appendChild(dialog);
+                });
+            });
+            delLink.addEventListener('click', function (e) {
+                alert('del: ' + self.getDisplayName());
+            });
+
             this._element = li;
         },
         getChildrenContainer: function () {
@@ -126,6 +147,11 @@
                         // We assume that paths with '.' are files and everthing else are folders.
                         // FIX: Waiting for freightCrane issue #23 to help us
                         if (list[i].path.indexOf('.') === -1) {
+                            // Ignore all paths in the ignore path settings
+                            if (!staticWeb.inAdminPath() && staticWeb.config.onPage.navigation.ignorePaths.indexOf(list[i].name) !== -1) {
+                                continue;
+                            }
+
                             var child = new NavNode(list[i].path, self, self._template);
                             self._children.push(child);
                         }
