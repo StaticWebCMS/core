@@ -131,8 +131,22 @@
                         var header = templateNode.querySelector('b');
                         header.innerText = name;
 
+                        // If we have an preview image for page we want to show it
                         var img = templateNode.querySelector('img');
-                        img.setAttribute('src', previewImagePath);
+                        if (img) {
+                            img.onerror = function() {
+                                // If no preview image can be found, hide img element.
+                                this.style.display = 'none';
+                            }
+                            img.setAttribute('src', previewImagePath);
+                        }
+
+                        // By default we will display page in iframe to get a preview (can be overwritten by img with same name)
+                        // We will use sandbox tag to ensure no scripts are beign executed
+                        var iframe = templateNode.querySelector('iframe');
+                        if (iframe) {
+                            iframe.setAttribute('src', path);
+                        }
 
                         templateContainer.appendChild(templateNode);
                     }
