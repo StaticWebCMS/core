@@ -45,11 +45,27 @@
             var delLink = li.querySelector('.sw-onpage-navigation-item-delete');
             var addLink = li.querySelector('.sw-onpage-navigation-item-add');
 
+            var showRemoveBtn = true;
+            var showAddBtn = true;
+
             // We are not allowed to remove root page, so remove delete button
             if (this.getPath() === "/") {
+                showRemoveBtn = false;
+            }
+
+            // Don't allow change in admin path (and ignore root)
+            if (this.getPath().indexOf(staticWeb.getAdminPath()) >= 0) {
+                showAddBtn = false;
+                showRemoveBtn = false;
+            }
+
+            if (!showRemoveBtn) {
                 delLink.remove();
             }
 
+            if (!showAddBtn) {
+                addLink.remove();
+            }
 
             addLink.addEventListener('click', function (e) {
                 self._showAddPageDialog();
@@ -193,7 +209,7 @@
                         // FIX: Waiting for freightCrane issue #23 to help us
                         if (list[i].path.indexOf('.') === -1) {
                             // Ignore all paths in the ignore path settings
-                            if (!staticWeb.inAdminPath() && staticWeb.config.onPage.navigation.ignorePaths.indexOf(list[i].name) !== -1) {
+                            if (staticWeb.config.onPage.navigation.ignorePaths.indexOf(list[i].name) !== -1) {
                                 continue;
                             }
 
