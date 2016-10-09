@@ -78,7 +78,6 @@
         },
         _showAddPageDialog: function () {
             var self = this;
-            //alert('add page under: ' + self.getDisplayName());
             staticWeb.retrieveTemplate("sw-onpage-page-create-dialog", function (dialogTemplate) {
                 var body = document.querySelector('body');
                 var dialog = dialogTemplate.cloneNode(true).querySelector('sw-dialog').children[0];
@@ -88,7 +87,9 @@
                 pathInput.innerText = self.getPath();
 
                 var templateContainer = dialog.querySelector('.sw-onpage-page-create-dialog-content-templates');
-                self._getTemplates(templateContainer);
+
+                var templateItemTemplate = dialogTemplate.querySelector('sw-template-item').children[0];
+                self._getTemplates(templateContainer, templateItemTemplate);
 
                 closeBtn.addEventListener('click', function () {
                     dialog.remove();
@@ -96,7 +97,7 @@
                 body.appendChild(dialog);
             });
         },
-        _getTemplates: function (templateContainer) {
+        _getTemplates: function (templateContainer, templateItemTemplate) {
             var self = this;
             var adminPath = staticWeb.getAdminPath();
 
@@ -109,7 +110,7 @@
 
                 var list = arguments[0];
                 var elements = [];
-                elements.push('<b style="display:block;padding:5px;padding-bottom:10px;padding-top:30px">Choose page layout to use:</b>');
+                templateContainer.innerHTML = '<b style="display:block;padding:5px;padding-bottom:10px;padding-top:30px">Choose page layout to use:</b>';
 
                 for (var i = 0; i < list.length; i++) {
                     var isPreview = list[i].path.indexOf('.jpg') > 0 || list[i].path.indexOf('.jpeg') > 0 || list[i].path.indexOf('.png') > 0 || list[i].path.indexOf('.gif') > 0;
@@ -119,10 +120,23 @@
                         var name = list[i].name.replace('.html', '').replace('.htm', '');
                         var path = list[i].path;
                         var previewImagePath = list[i].path.replace('.html', '.jpg').replace('.html', '.jpg');
-                        elements.push('<div class="sw-onpage-navigation-createpage-template" data-sw-onpage-createpage-template="' + path + '" style="margin:5px;padding:1px;width:250px;display:inline-block;background-color:#2F5575;color:#fff;vertical-align:top;border-radius:6px;"><b style="display:block;padding:4px">' + name + '</b><img src="' + previewImagePath + '" width="100%" style="cursor:pointer;background: url(https://placehold.it/250x250);height:250px;width:250px" /></div>');
+
+                        var templateNode = templateItemTemplate.cloneNode(true);
+                        var radio = templateNode.querySelector('input[type=radio]');
+                        radio.setAttribute('id', 'sw-onpage-page-create-dialog-template-' + i);
+
+                        var label = templateNode.querySelector('label');
+                        label.setAttribute('for', 'sw-onpage-page-create-dialog-template-' + i);
+
+                        var header = templateNode.querySelector('b');
+                        header.innerText = name;
+
+                        var img = templateNode.querySelector('img');
+                        img.setAttribute('src', previewImagePath);
+
+                        templateContainer.appendChild(templateNode);
                     }
                 }
-                templateContainer.innerHTML = elements.join('');
             });
         },
         getChildrenContainer: function () {
