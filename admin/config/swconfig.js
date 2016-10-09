@@ -2,7 +2,7 @@
 (function (sw) {
     sw.config.storage = {
         'type': 'github',
-        'repo': 'StaticWebCMS/core',
+        'repo': 'flowertwig-org/core',
         'tokenService': 'https://brfskagagard-inloggning.azurewebsites.net?appName=admin-dev'
     }
     sw.config.permissions = {
