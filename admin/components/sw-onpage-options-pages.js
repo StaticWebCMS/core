@@ -50,19 +50,64 @@
                 delLink.remove();
             }
 
+
             addLink.addEventListener('click', function (e) {
-                //alert('add page under: ' + self.getDisplayName());
-                staticWeb.retrieveTemplate("sw-onpage-page-create-dialog", function (dialogTemplate) {
-                    var body = document.querySelector('body');
-                    var dialog = dialogTemplate.cloneNode(true).querySelector('sw-dialog').children[0];
-                    body.appendChild(dialog);
-                });
+                self._showAddPageDialog();
             });
             delLink.addEventListener('click', function (e) {
                 alert('del: ' + self.getDisplayName());
             });
 
             this._element = li;
+        },
+        _showAddPageDialog: function () {
+            var self = this;
+            //alert('add page under: ' + self.getDisplayName());
+            staticWeb.retrieveTemplate("sw-onpage-page-create-dialog", function (dialogTemplate) {
+                var body = document.querySelector('body');
+                var dialog = dialogTemplate.cloneNode(true).querySelector('sw-dialog').children[0];
+                var closeBtn = dialog.querySelector('.sw-onpage-dialog-close');
+
+                var pathInput = dialog.querySelector('#sw-onpage-page-create-dialog-parent-url');
+                pathInput.innerText = self.getPath();
+
+                var templateContainer = dialog.querySelector('.sw-onpage-page-create-dialog-content-templates');
+                self._getTemplates(templateContainer);
+
+                closeBtn.addEventListener('click', function () {
+                    dialog.remove();
+                })
+                body.appendChild(dialog);
+            });
+        },
+        _getTemplates: function (templateContainer) {
+            var self = this;
+            var adminPath = staticWeb.getAdminPath();
+
+            staticWeb.storage.list(adminPath + 'config/layouts/page/', function (info, status) {
+                var list = info;
+                if (!list || list.length === 0) {
+                    templateContainer.innerHTML = '<span>No page layouts found. Please add page layouts to: ' + adminPath + 'config/layouts/page/</span>';
+                    return;
+                }
+
+                var list = arguments[0];
+                var elements = [];
+                elements.push('<b style="display:block;padding:5px;padding-bottom:10px;padding-top:30px">Choose page layout to use:</b>');
+
+                for (var i = 0; i < list.length; i++) {
+                    var isPreview = list[i].path.indexOf('.jpg') > 0 || list[i].path.indexOf('.jpeg') > 0 || list[i].path.indexOf('.png') > 0 || list[i].path.indexOf('.gif') > 0;
+                    var isLayout = list[i].path.indexOf('.html') > 0 || list[i].path.indexOf('.htm') > 0;
+
+                    if (isLayout) {
+                        var name = list[i].name.replace('.html', '').replace('.htm', '');
+                        var path = list[i].path;
+                        var previewImagePath = list[i].path.replace('.html', '.jpg').replace('.html', '.jpg');
+                        elements.push('<div class="sw-onpage-navigation-createpage-template" data-sw-onpage-createpage-template="' + path + '" style="margin:5px;padding:1px;width:250px;display:inline-block;background-color:#2F5575;color:#fff;vertical-align:top;border-radius:6px;"><b style="display:block;padding:4px">' + name + '</b><img src="' + previewImagePath + '" width="100%" style="cursor:pointer;background: url(https://placehold.it/250x250);height:250px;width:250px" /></div>');
+                    }
+                }
+                templateContainer.innerHTML = elements.join('');
+            });
         },
         getChildrenContainer: function () {
             var self = this;
