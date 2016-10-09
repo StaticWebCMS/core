@@ -9,6 +9,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "freightCrane": "^0.1.0"
+    "freightCrane": "~0.3.0"
   }
 }

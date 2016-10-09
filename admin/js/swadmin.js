@@ -74,7 +74,7 @@
         var self = this;
         var adminPath = this.getAdminPath();
 
-        var freightCraneFolder = adminPath + 'node_modules/freightCrane/src/';
+        var freightCraneFolder = adminPath + 'node_modules/freightCrane/';
         this.includeScript(freightCraneFolder + 'freightCrane.js');
         this.includeScript(adminPath + 'config/swconfig.js');
         self.ensureLoaded('storage', self.config, function () {
