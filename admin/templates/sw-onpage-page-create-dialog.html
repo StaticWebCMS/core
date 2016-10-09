@@ -1,20 +1,43 @@
 <sw-template>
     <div>
         <style>
-            .sw-onpage-page-create-dialog {
+        .sw-onpage-page-create-dialog {
                 position: absolute;
-                top:0;
-                bottom:0;
-                left:0;
-                right:0;
-                background-color:#fff;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: #fff;
                 z-index: 1000000;
+                overflow-x: hidden;
+                overflow-y: scroll;
             }
+            
+            .sw-onpage-page-create-dialog-header {
+                padding: 5px 10px;
+                background-color: #2F5575;
+                color: #fff;
+                text-align: center;
+                font-weight: bold;
+            }
+            
+            .sw-onpage-dialog-close {
+                color: #fff;
+                text-decoration: none;
+                float: right;
+                /* to ensure bigger click area for touch devices */
+                padding: 0 10px;
+            }
+            
+            .sw-onpage-page-create-dialog-content {
+                padding: 10px;
+            }
+        }
         </style>
         <sw-dialog>
             <div class="sw-onpage-page-create-dialog">
                 <div class="sw-onpage-page-create-dialog-header">
-                    StaticWeb - Create new page<a href="#" title="Close dialog" class="sw-onpage-dialog-close">x</a>
+                    StaticWeb - Create new page<a href="#close" title="Close dialog" class="sw-onpage-dialog-close">x</a>
                 </div>
                 <div class="sw-onpage-page-create-dialog-content">
                     <div>
@@ -24,7 +47,7 @@
                     </div>
                     <div>
                         <b>Page url:</b>
-                        <input id="sw-onpage-page-create-dialog-parent" type="hidden" value="" />
+                        <span id="sw-onpage-page-create-dialog-parent-url"></span>
                         <input id="sw-onpage-page-create-dialog-url" type="text" value="" />
                     </div>
                     <div>
