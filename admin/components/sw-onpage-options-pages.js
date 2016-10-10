@@ -145,11 +145,6 @@
                         // We will use sandbox tag to ensure no scripts are beign executed
                         var iframe = templateNode.querySelector('iframe');
                         if (iframe) {
-                            iframe.onload = function() {
-                                //var html = this.contentDocument.querySelector('html');
-                                //html.style.zoom = 0.3;
-                                //this.contentDocument.body.style.zoom = 0.3;
-                            };
                             iframe.setAttribute('src', path);
                         }
 
