@@ -1,11 +1,7 @@
 (function (staticWeb) {
   "use strict";
-  var Options = function () {
-    if (!(this instanceof Options)) {
-      return new Options();
-    }
-
-    return this.init();
+  var Options = function (element) {
+    return this.init(element);
   }
   Options.prototype = {
     createInterface: function () {
@@ -13,23 +9,19 @@
       var adminPath = staticWeb.getAdminPath();
 
       staticWeb.retrieveTemplate("sw-onpage-options", function (template) {
-        var elements = staticWeb.elements["sw-onpage-options"].instances;
-        for (var i = 0; i < elements.length; i++) {
-          var element = elements[i];
-          var tmp = template.cloneNode(true);
+        var tmp = template.cloneNode(true);
 
-          staticWeb.insertTemplate(tmp, element);
+        staticWeb.insertTemplate(tmp, self._element);
 
-          // Show/hide options menu and track when it changes
-          self.trackOptionsOpenState(element);
-          // Show/hide pages panel and track when it changes
-          self.trackPanelPageOpenState(element);
+        // Show/hide options menu and track when it changes
+        self.trackOptionsOpenState(self._element);
+        // Show/hide pages panel and track when it changes
+        self.trackPanelPageOpenState(self._element);
 
-          staticWeb.loadComponents();
-        }
+        staticWeb.loadComponents();
       });
     },
-    trackPanelPageOpenState: function(element) {
+    trackPanelPageOpenState: function (element) {
       var appDisplay = staticWeb.config.onPage.navigation.display;
       var userDisplay = staticWeb.getUserSetting('sw.config.onPage.navigation.display');
 
@@ -62,10 +54,11 @@
     onStorageReady: function (storage) {
       var self = this;
     },
-    init: function () {
+    init: function (element) {
       var self = this;
+      self._element = element;
       self.createInterface();
     }
   }
-  staticWeb.components.swOnPageOptions = Options();
+  staticWeb.registerComponent('sw-onpage-options', Options);
 })(window.StaticWeb);
