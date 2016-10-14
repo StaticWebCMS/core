@@ -59,6 +59,14 @@
             return value;
         }
     }
+    StaticWebDefinition.prototype.ensureHtmlImportSupport = function (callback) {
+        var hasNativeSupport = 'import' in document.createElement('link');
+        if (hasNativeSupport) {
+            callback();
+        }else {
+            
+        }
+    }
     StaticWebDefinition.prototype.retrieveTemplate = function (templateName, loadCallback, errorCallback) {
         var templateId = 'template-' + templateName;
         var link = document.querySelector('#' + templateId);
