@@ -56,7 +56,7 @@
 
 (function (staticWeb) {
     var hasVisitorComponent = staticWeb.hasVisitorComponents();
-    if (hasVisitorComponent || staticWeb.hasLoggedInInfo() || staticWeb.inAdminPath()) {
+    if (hasVisitorComponent || staticWeb.hasLoggedInInfo()) {
         var path = staticWeb.getAdminPath();
         // Load admin script(s)
         staticWeb.includeScript(path + 'js/swadmin.js');
