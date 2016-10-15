@@ -127,7 +127,7 @@
       iframe.onload = function () {
         var scripts = iframe.contentDocument.scripts;
         var hasValidScript = false;
-        var test = sw.getAdminPath();
+        var test = staticWeb.getAdminPath();
 
         for (var i = 0; i < scripts.length; i++) {
           if (document.scripts[i].src.indexOf(test)) {
