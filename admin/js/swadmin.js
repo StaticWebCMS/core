@@ -65,8 +65,7 @@
     }
     StaticWebDefinition.prototype.ensureHtmlImportSupport = function (callback) {
         var self = this;
-        var hasNativeSupport = 'import' in document.createElement('link');
-        if (hasNativeSupport) {
+        if (self.hasHtmlImportSupport()) {
             callback();
         } else {
             var adminPath = this.getAdminPath();
