@@ -23,7 +23,7 @@
         'display': 'onDemand', // 'onDemand', 'always', 'no' 
         'navigation': {
             'display': 'onDemand', // 'onDemand', 'always', 'no'
-            'ignorePaths': ['LICENSE']
+            'ignorePaths': ['LICENSE', 'admin']
         }
     };
 })(StaticWeb);
