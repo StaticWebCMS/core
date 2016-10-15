@@ -104,7 +104,7 @@
         staticWeb.addPage(self.getPageUrl(), templateLocation, function () {
           var dialogContent = self._element.querySelector('.sw-onpage-page-create-dialog-content');
           dialogContent.innerHTML = "waiting for servers to empty cache, please wait";
-          self.waitUntilReady(self.getPageMetaUrl());
+          self.waitUntilReady(self.getPageUrl());
         });
         return;
       });
