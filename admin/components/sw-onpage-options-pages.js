@@ -71,7 +71,30 @@
                 self._showAddPageDialog();
             });
             delLink.addEventListener('click', function (e) {
-                alert('del: ' + self.getDisplayName());
+                var hasChildren = self._children.length > 0;
+                var msg = '';
+                if (hasChildren) {
+                    msg = 'Are you sure you want to remove ' + self.getDisplayName() + ' and all children?';
+                }else {
+                    msg = 'Are you sure you want to remove ' + self.getDisplayName() + '?';
+                }
+                if (confirm(msg)) {
+                    console.log('del: ', self.getPath());
+                    staticWeb.storage.del(self.getPath() + '/', function (callStatus, path) {
+                        if (callStatus.isOK) {
+                            var isCurrentPagePartOfDeletedPath = location.pathname.indexOf(path) >= 0;
+
+                            if (isCurrentPagePartOfDeletedPath) {
+                                // TODO: we need to send user upwards in tree as current page has been removed.
+                            }else{
+                                // TODO: reload page or update places that show page tree
+                                location.reload();
+                            }
+                        }else{
+                            alert('Unable to delete ' + path);
+                        }
+                    });
+                }
             });
 
             this._element = li;
