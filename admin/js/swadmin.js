@@ -59,15 +59,42 @@
             return value;
         }
     }
+    StaticWebDefinition.prototype.hasHtmlImportSupport = function (callback) {
+        var hasNativeSupport = 'import' in document.createElement('link');
+        return hasNativeSupport;
+    }
     StaticWebDefinition.prototype.ensureHtmlImportSupport = function (callback) {
+        var self = this;
         var hasNativeSupport = 'import' in document.createElement('link');
         if (hasNativeSupport) {
             callback();
-        }else {
-            
+        } else {
+            var adminPath = this.getAdminPath();
+
+            var webcomponentsFolder = adminPath + 'bower_components/webcomponentsjs/';
+            self.includeScript(webcomponentsFolder + 'HTMLImports.min.js');
+            self.ensureLoaded('HTMLImports', window, function () {
+                // we should have HTML Imports support now, continue...
+                callback();
+            });
         }
     }
     StaticWebDefinition.prototype.retrieveTemplate = function (templateName, loadCallback, errorCallback) {
+        var self = this;
+
+        self._htmlImportPolyfill = self._htmlImportPolyfill || false;
+
+        if (!self.hasHtmlImportSupport() && !self._htmlImportPolyfill) {
+            // browser doesn't support HTML Imports, try load polyfill
+            self.ensureHtmlImportSupport(function() {
+
+                self._htmlImportPolyfill = true;
+
+                self.retrieveTemplate(templateName, loadCallback, errorCallback);
+            });
+            return;
+        }
+
         var templateId = 'template-' + templateName;
         var link = document.querySelector('#' + templateId);
 
