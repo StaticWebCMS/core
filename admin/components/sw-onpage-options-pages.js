@@ -79,15 +79,23 @@
                     msg = 'Are you sure you want to remove ' + self.getDisplayName() + '?';
                 }
                 if (confirm(msg)) {
-                    console.log('del: ', self.getPath());
                     staticWeb.storage.del(self.getPath() + '/', function (callStatus, path) {
                         if (callStatus.isOK) {
                             var isCurrentPagePartOfDeletedPath = location.pathname.indexOf(path) >= 0;
 
                             if (isCurrentPagePartOfDeletedPath) {
-                                // TODO: we need to send user upwards in tree as current page has been removed.
+                                // we need to send user upwards in tree as current page has been removed.
+                                var loc = location.pathname.replace('index.html', '').replace('index.htm', '');
+                                var lastChar = loc[loc.length -1];
+                                if (lastChar !== '/') {
+                                    loc = loc + '/';
+                                }
+                                var index = loc.lastIndexOf('/',loc.length -2);
+                                loc = loc.substring(0, index + 1);
+                                // do the actual move to parent page
+                                location.pathname = loc;
                             }else{
-                                // TODO: reload page or update places that show page tree
+                                // reload page or update places that show page tree
                                 location.reload();
                             }
                         }else{
